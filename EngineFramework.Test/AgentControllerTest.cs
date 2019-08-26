@@ -11,7 +11,7 @@ namespace EngineFramework.Test
         [TestMethod, Timeout(120000)]
         public void TestKafkaConsumerDBFailOverEngine()
         {
-            DBFailoverKafkaConsumerTestEngine d = new DBFailoverKafkaConsumerTestEngine(new Engiene.KafkaEngine.KafKaConfig() { URL = "http://192.168.87.11:9092" }, "test");
+            DBFailoverKafkaConsumerTestEngine d = new DBFailoverKafkaConsumerTestEngine(new Engiene.KafkaEngine.KafKaConfig() { URL = "http://192.168.87.11:9092" }, "test", new Storages.SqlStorageManager());
             d.Start();
             Task.Delay(100).Wait();
 

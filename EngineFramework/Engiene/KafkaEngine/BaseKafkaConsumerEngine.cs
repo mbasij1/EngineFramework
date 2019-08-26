@@ -1,5 +1,5 @@
 ﻿using EngineFramework.Setting;
-using EngineFramework.Storage;
+using EngineFramework.Storages;
 using KafkaNet;
 using KafkaNet.Model;
 using KafkaNet.Protocol;
@@ -16,10 +16,13 @@ namespace EngineFramework.Engiene.KafkaEngine
     {
         public KafKaConfig _Config { get; set; }
         public string Topic { get; set; }
-        public BaseKafkaConsumerEngine(KafKaConfig Config, string topic)
+        private StorageManager _StorageManager { get; set;}
+
+        public BaseKafkaConsumerEngine(KafKaConfig Config, string topic, StorageManager storageManager)
         {
             _Config = Config;
             Topic = topic;
+            _StorageManager = storageManager;
         }
 
         protected override void EngineController()
@@ -65,12 +68,12 @@ namespace EngineFramework.Engiene.KafkaEngine
 
         protected OffsetPosition GetOffsetProccessed()
         {
-            return StorageManager.GetSetting<OffsetPosition>(this.GetType().FullName, "TopicName");
+            return _StorageManager.GetSetting<OffsetPosition>(this.GetType().FullName, Topic);
         }
 
         protected void SaveMesseageOffsetProccessed(MessageMetadata messageMetadata)
         {
-            StorageManager.SaveSetting(this.GetType().FullName, "TopicName", messageMetadata);
+            _StorageManager.SaveSetting(this.GetType().FullName, Topic, messageMetadata);
         }
 
         public abstract void HandleMessage(Message message);

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace EngineFramework.Logging
@@ -21,7 +22,10 @@ namespace EngineFramework.Logging
                     SourceName = "Application"
                 };
 
-            loggerFactory = new LoggerFactory().AddConsole().AddDebug().AddEventLog(
+            loggerFactory = new LoggerFactory().AddConsole().AddDebug();
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))//(Environment.OSVersion.Platform == PlatformID.Win32NT)
+                loggerFactory = loggerFactory.AddEventLog(
                 new Microsoft.Extensions.Logging.EventLog.EventLogSettings()
                 {
                     LogName = temp.LogName,

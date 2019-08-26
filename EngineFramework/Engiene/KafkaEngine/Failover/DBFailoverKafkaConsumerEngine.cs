@@ -10,6 +10,7 @@ using EngineFramework.Engiene.KafkaEngine;
 using KafkaNet.Protocol;
 using KafkaNet;
 using KafkaNet.Model;
+using EngineFramework.Storages;
 
 namespace EngineFramework.Engiene.KafkaEngine.Failover
 {
@@ -26,7 +27,7 @@ namespace EngineFramework.Engiene.KafkaEngine.Failover
         private DateTime _LastCheckServiceIsForThisAgent { get; set; }
         private bool _LastCheckServiceIsRunningResult { get; set; }
 
-        public DBFailoverKafkaConsumerEngine(KafKaConfig Config, string topic) : base(Config, topic)
+        public DBFailoverKafkaConsumerEngine(KafKaConfig Config, string topic, StorageManager storageManager) : base(Config, topic, storageManager)
         {
         }
 
