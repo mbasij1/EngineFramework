@@ -5,9 +5,13 @@
     <Authors>Morteza Basij</Authors>
     <Company>Personal Framework</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.2</Version>
-    <AssemblyVersion>2.0.2.1</AssemblyVersion>
-    <FileVersion>2.0.2.1</FileVersion>
+    <Version>2.1.2</Version>
+    <AssemblyVersion>2.1.2.1</AssemblyVersion>
+    <FileVersion>2.1.2.1</FileVersion>
+    <RepositoryUrl>https://github.com/mbasij1/EngineFramework</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/mbasij1/EngineFramework</PackageProjectUrl>
+    <PackageTags>Framework</PackageTags>
+    <Description>This Framework write for writing service .net core speciality for service that working with queues like kafka and rabbitmq</Description>
   </PropertyGroup>
 
   <ItemGroup>
