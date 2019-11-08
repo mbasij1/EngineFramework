@@ -17,7 +17,7 @@ namespace EngineFramework.Engiene.KafkaEngine
     {
         public KafKaConfig _Config { get; set; }
         public string Topic { get; set; }
-        private StorageManager _StorageManager { get; set;}
+        private StorageManager _StorageManager { get; set; }
 
         public BaseKafkaConsumerEngine(KafKaConfig Config, string topic, StorageManager storageManager)
         {
@@ -69,13 +69,7 @@ namespace EngineFramework.Engiene.KafkaEngine
                         try
                         {
                             HandleMessage(message);
-
-                            i++;
-                            if (i == 100)
-                            {
-                                SaveMesseageOffsetProccessed(message.Meta);
-                                i = 0;
-                            }
+                            SaveMesseageOffsetProccessed(message.Meta);
                         }
                         catch (Exception ex)
                         {
