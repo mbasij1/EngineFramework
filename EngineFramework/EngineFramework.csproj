@@ -5,9 +5,9 @@
     <Authors>Morteza Basij</Authors>
     <Company>Personal Framework</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.0</Version>
-    <AssemblyVersion>2.0.0.1</AssemblyVersion>
-    <FileVersion>2.0.0.1</FileVersion>
+    <Version>2.0.2</Version>
+    <AssemblyVersion>2.0.2.1</AssemblyVersion>
+    <FileVersion>2.0.2.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
