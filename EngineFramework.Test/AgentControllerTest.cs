@@ -27,7 +27,7 @@ namespace EngineFramework.Test
         [TestMethod, Timeout(120000)]
         public void TestBaseKafkaConsumerEngine()
         {
-            BaseKafkaConsumerTestEngine d = new BaseKafkaConsumerTestEngine(new Engiene.KafkaEngine.KafKaConfig() { URL = "http://91.99.73.147:9092" }, "test",
+            BaseKafkaConsumerTestEngine d = new BaseKafkaConsumerTestEngine(new Engiene.KafkaEngine.KafKaConfig() { URL = "http://172.16.30.22:9092" }, "test",
                 new Storages.MongoStorageManager(new Context.MongoDbContext( new Context.MongoDBConnectionString()
             {
                 ConnectionString = "mongodb://localhost:27017",
