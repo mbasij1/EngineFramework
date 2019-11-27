@@ -24,6 +24,29 @@ namespace EngineFramework.Test
             }
         }
 
+        [TestMethod, Timeout(120000)]
+        public void TestBaseKafkaConsumerEngine()
+        {
+            BaseKafkaConsumerTestEngine d = new BaseKafkaConsumerTestEngine(new Engiene.KafkaEngine.KafKaConfig() { URL = "http://91.99.73.147:9092" }, "test",
+                new Storages.MongoStorageManager(new Context.MongoDbContext( new Context.MongoDBConnectionString()
+            {
+                ConnectionString = "mongodb://localhost:27017",
+                Database = "EngineFramework"
+            })));
+
+            d.Start();
+            Task.Delay(100).Wait();
+            while (!BaseKafkaConsumerTestEngine.BaseFailOverTestIsRun) ;
+
+            d.Stop();
+            while (true)
+            {
+                Task.Delay(100).Wait();
+                if (d.IsStoped)
+                    break;
+            }
+        }
+
         [TestMethod, Timeout(40000)]
         public void TestDBFailOverEngine()
         {

@@ -42,10 +42,10 @@ namespace EngineFramework.Engiene.KafkaEngine
                 //consumerOptions.FetchBufferMultiplier = 1;
                 //consumerOptions.TopicPartitionQueryTimeMs = 100;
                 int i = 0;
-                var offsetProcessed = GetOffsetProccessed();
+                var storedOffsetProcessed = GetOffsetProccessed();
 
-                if (offsetProcessed == null)
-                    offsetProcessed = new OffsetPosition()
+                if (storedOffsetProcessed == null)
+                    storedOffsetProcessed = new OffsetPosition()
                     {
                         Offset = 0,
                         PartitionId = 0
@@ -53,17 +53,24 @@ namespace EngineFramework.Engiene.KafkaEngine
 
                 using (var consumer = new Consumer(consumerOptions))
                 {
-                    var kafkaOffsets = consumer.GetOffsetPosition();
-                    if (kafkaOffsets != null)
+                    var kafkaOffsets = consumer.GetTopicOffsetAsync(Topic).Result;
+                    if (kafkaOffsets != null && kafkaOffsets.Count() != 0)
                     {
-                        var kafkaMinOffset = kafkaOffsets.OrderByDescending(s => s.Offset).FirstOrDefault();
-                        if (kafkaMinOffset != null && offsetProcessed.Offset < kafkaMinOffset.Offset)
-                        {
-                            offsetProcessed = kafkaMinOffset;
-                        }
+                        var kafkaMinOffset = kafkaOffsets.OrderBy(s => s.Offsets.Min()).FirstOrDefault();
+                        var kafkaMaxOffset = kafkaOffsets.OrderByDescending(s => s.Offsets.Max()).FirstOrDefault();
+
+                        if (storedOffsetProcessed.Offset > kafkaMaxOffset.Offsets.Max() || storedOffsetProcessed.Offset < kafkaMinOffset.Offsets.Min())
+                            storedOffsetProcessed = new OffsetPosition()
+                            {
+                                Offset = kafkaMinOffset.Offsets.Min(),
+                                PartitionId = kafkaMinOffset.PartitionId
+                            };
+                        else
+                            storedOffsetProcessed.Offset++;
+
+                        consumer.SetOffsetPosition(storedOffsetProcessed);
                     }
 
-                    consumer.SetOffsetPosition(offsetProcessed);
                     foreach (var message in consumer.Consume(_CancellationToken))
                     {
                         try
@@ -79,6 +86,10 @@ namespace EngineFramework.Engiene.KafkaEngine
                         }
                     }
                 }
+            }
+            catch (OperationCanceledException ex)
+            {
+
             }
             catch (Exception ex)
             {
