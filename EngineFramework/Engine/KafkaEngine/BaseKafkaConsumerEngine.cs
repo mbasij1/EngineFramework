@@ -82,7 +82,7 @@ namespace EngineFramework.Engiene.KafkaEngine
                         {
                             logger.LogCritical(ex, $"Exception Occured In Engine Work, (ID={_EngineID})");
 
-                            consumer.SetOffsetPosition(new OffsetPosition(message.Meta.PartitionId, message.Meta.Offset - 1));
+                            consumer.SetOffsetPosition(new OffsetPosition(message.Meta.PartitionId, message.Meta.Offset));
                         }
                     }
                 }
