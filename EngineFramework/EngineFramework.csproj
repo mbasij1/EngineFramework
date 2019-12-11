@@ -5,9 +5,9 @@
     <Authors>Morteza Basij</Authors>
     <Company>Personal Framework</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.1.5</Version>
-    <AssemblyVersion>2.1.5.0</AssemblyVersion>
-    <FileVersion>2.1.5.0</FileVersion>
+    <Version>2.1.7</Version>
+    <AssemblyVersion>2.1.7.0</AssemblyVersion>
+    <FileVersion>2.1.7.0</FileVersion>
     <RepositoryUrl>https://github.com/mbasij1/EngineFramework</RepositoryUrl>
     <PackageProjectUrl>https://github.com/mbasij1/EngineFramework</PackageProjectUrl>
     <PackageTags>Framework</PackageTags>

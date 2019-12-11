@@ -73,6 +73,7 @@ namespace EngineFramework.Engiene.KafkaEngine
 
                     foreach (var message in consumer.Consume(_CancellationToken))
                     {
+                        tryMesseageAgain:
                         try
                         {
                             HandleMessage(message);
@@ -80,9 +81,10 @@ namespace EngineFramework.Engiene.KafkaEngine
                         }
                         catch (Exception ex)
                         {
-                            logger.LogCritical(ex, $"Exception Occured In Engine Work, (ID={_EngineID})");
-
-                            consumer.SetOffsetPosition(new OffsetPosition(message.Meta.PartitionId, message.Meta.Offset));
+                            logger.LogCritical(ex, $"Exception Occured In Kafka Consumer '{this.GetType().Name}' Offset {message.Meta.Offset} (ID={_EngineID})");
+                            var delayTask = Task.Delay(5000);
+                            delayTask.Wait();
+                            goto tryMesseageAgain;
                         }
                     }
                 }
